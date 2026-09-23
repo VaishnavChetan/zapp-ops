@@ -93,18 +93,3 @@ with tab_stores:
     
     st.warning("⚠️ **Assessment Deadline (27 Sep 2026):** Stores in Bengaluru, Hyderabad, and Chennai must achieve ≥ 0.200 units/day (₹19/day) to prevent automated de-listing and store exits.")
 
-# ----------------- TAB 3: SKU STOCK MONITOR -----------------
-with tab_inventory:
-    st.subheader("Cross-Platform Stock & Days of Cover")
-    
-    for _, row in df_stock.iterrows():
-        c1, c2, c3, c4 = st.columns([2, 1, 1, 1])
-        c1.write(f"**{row['Channel']}** — {row['SKU']}")
-        c2.write(f"Sellable: `{row['Sellable']}`")
-        c3.write(f"Days Cover: `{row['Days_Cover']} days`")
-        if row["Sellable"] == 0:
-            c4.error("CRITICAL OOS")
-        elif row["Days_Cover"] < 7:
-            c4.warning("LOW STOCK")
-        else:
-            c4.success("HEALTHY")
